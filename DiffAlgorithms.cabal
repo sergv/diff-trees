@@ -1,0 +1,77 @@
+-- Created     :  Sunday, 12 June 2016
+
+name:
+  DiffAlgorithms
+version:
+  0.1.0.0
+synopsis:
+  TODO
+description:
+  TODO
+license:
+  BSD3
+-- license-file:
+--   LICENSE
+author:
+  Sergey Vinokurov
+maintainer:
+  Sergey Vinokurov <serg.foo@gmail.com>
+
+cabal-version:
+  >= 1.16
+build-type:
+  Simple
+
+-- library
+--   exposed-modules:
+--     DiffAlgorithms
+--   build-depends:
+--       array
+--     , base >= 4.7
+--     , containers
+--     , dlist
+--     , vector >= 0.11
+--   default-language:
+--     Haskell2010
+--   ghc-options:
+--     -Wall
+--     -fwarn-monomorphism-restriction
+--     -fno-warn-type-defaults
+--     -fno-warn-name-shadowing
+--   ghc-prof-options:
+--     -fprof-auto
+
+executable DiffAlgorithms
+  main-is:
+    DiffAlgorithms.hs
+  other-modules:
+    FastDiff
+  build-depends:
+      Diff
+    , QuickCheck
+    , array
+    , base >= 4.7
+    , containers
+    , criterion
+    , deepseq
+    , directory
+    , dlist
+    , filepath
+    , optparse-applicative
+    , tasty
+    , tasty-quickcheck
+    , text
+    , vector >= 0.11
+    , wl-pprint-text
+  default-language:
+    Haskell2010
+  ghc-options:
+    -Wall
+    -fwarn-monomorphism-restriction
+    -fno-warn-type-defaults
+    -fno-warn-name-shadowing
+    -rtsopts
+    -main-is DiffAlgorithms
+  ghc-prof-options:
+    -fprof-auto
+
