@@ -105,5 +105,19 @@ fields (CIxs tix (CConIx cix)) =
     CCon fs => fs
 
 
+data Diff : {n : Nat} -> (fam : Fam n) -> List (TypeIx n) -> List (TypeIx n) -> Type where
+  Ins :  {source, target : List (TypeIx n)}
+      -> (ixs : Ixs fam)
+      -> Diff fam source (fields ixs ++ target)
+      -> Diff fam source (typeIx ixs :: target)
+  Del :  {source, target : List (TypeIx n)}
+      -> (ixs : Ixs fam)
+      -> Diff fam (fields ixs ++ source) target
+      -> Diff fam (typeIx ixs :: source) target
+  Cpy :  {source, target : List (TypeIx n)}
+      -> (ixs : Ixs fam)
+      -> Diff fam (fields ixs ++ source) (fields ixs ++ target)
+      -> Diff fam (typeIx ixs :: source) (typeIx ixs :: target)
+  End : Diff fam [] []
 
 

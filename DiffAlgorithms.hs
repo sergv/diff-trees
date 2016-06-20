@@ -64,12 +64,6 @@ import Test.QuickCheck
 
 import Debug.Trace
 
-display :: (Pretty a) => a -> Text
-display = PP.displayT . PP.renderPretty 0.8 100 . pretty
-
-display' :: (Pretty a) => a -> String
-display' = TL.unpack . display
-
 -- | Diff that starts from the string end and grows to the beginning.
 data Diff a where
   Ins :: a -> Diff a -> Diff a
@@ -86,26 +80,6 @@ instance (Pretty a) => Pretty (Diff a) where
   pretty (Cpy x d)   = "=" <> pretty x <> pretty d
   pretty (Mod x y d) = "/" <> pretty x <> "/" <> pretty y <> "/" <> pretty d
   pretty End         = mempty
-
-ppArray :: (Pretty a) => Array (Int, Int) a -> Doc
-ppArray arr = PP.vcat
-  [ PP.hsep $ map (PP.fill maxWidth) $ PP.punctuate ","
-      [ pretty $ arr Array.! (i, j)
-      | j <- [jStart..jEnd]
-      ]
-  | i <- [iStart..iEnd]
-  ]
-  where
-    ((iStart, jStart), (iEnd, jEnd)) = Array.bounds arr
-    maxWidth = 1 + maximum (map (length . display') $ Array.elems arr)
-
-ppTable :: (Pretty a) => [[a]] -> Doc
-ppTable xss = PP.vcat
-  [ PP.hsep $ map (PP.fill maxWidth) $ PP.punctuate "," $ map pretty xs
-  | xs <- xss
-  ]
-  where
-    maxWidth = 1 + maximum (map (length . display') $ concat xss)
 
 getLcs :: Diff a -> [a]
 getLcs (Ins _ d)   = getLcs d
@@ -504,3 +478,31 @@ main = do
         , bench "Data.Algorithm.Diff" $ nf (uncurry AlgDiff.getDiff) inputDifferent
         ]
     ]
+
+-- Utils
+
+display :: (Pretty a) => a -> Text
+display = PP.displayT . PP.renderPretty 0.8 100 . pretty
+
+display' :: (Pretty a) => a -> String
+display' = TL.unpack . display
+
+ppArray :: (Pretty a) => Array (Int, Int) a -> Doc
+ppArray arr = PP.vcat
+  [ PP.hsep $ map (PP.fill maxWidth) $ PP.punctuate ","
+      [ pretty $ arr Array.! (i, j)
+      | j <- [jStart..jEnd]
+      ]
+  | i <- [iStart..iEnd]
+  ]
+  where
+    ((iStart, jStart), (iEnd, jEnd)) = Array.bounds arr
+    maxWidth = 1 + maximum (map (length . display') $ Array.elems arr)
+
+ppTable :: (Pretty a) => [[a]] -> Doc
+ppTable xss = PP.vcat
+  [ PP.hsep $ map (PP.fill maxWidth) $ PP.punctuate "," $ map pretty xs
+  | xs <- xss
+  ]
+  where
+    maxWidth = 1 + maximum (map (length . display') $ concat xss)
