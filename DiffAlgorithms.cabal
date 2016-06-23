@@ -106,7 +106,41 @@ executable SexpDiff
     -fno-warn-type-defaults
     -fno-warn-name-shadowing
     -rtsopts
-    -main-is DiffAlgorithms
+    -main-is SexpDiff
   ghc-prof-options:
     -fprof-auto
 
+executable FunctorDiff
+  main-is:
+    FunctorDiff.hs
+  other-modules:
+    FastDiff
+  build-depends:
+      QuickCheck
+    , array
+    , base >= 4.7
+    , containers
+    , criterion
+    , deepseq
+    , directory
+    , dlist
+    , filepath
+    , free
+    , mtl
+    , optparse-applicative
+    , tasty
+    , tasty-quickcheck
+    , text
+    , vector >= 0.11
+    , wl-pprint-text
+  default-language:
+    Haskell2010
+  ghc-options:
+    -Wall
+    -fwarn-monomorphism-restriction
+    -fno-warn-type-defaults
+    -fno-warn-name-shadowing
+    -rtsopts
+    -main-is FunctorDiff
+  ghc-prof-options:
+    -fprof-auto
