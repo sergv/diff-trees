@@ -89,14 +89,18 @@ executable SexpDiff
     , deepseq
     , directory
     , dlist
+    , elisp
     , filepath
     , free
     , mtl
     , optparse-applicative
+    , pointed
     , tasty
     , tasty-quickcheck
     , text
+    , transformers
     , vector >= 0.11
+    , void
     , wl-pprint-text
   default-language:
     Haskell2010

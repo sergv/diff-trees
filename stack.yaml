@@ -1,4 +1,8 @@
-resolver: lts-6.4
+resolver: lts-6.5
 
 packages:
 - '.'
+- location:  '/home/sergey/projects/haskell/projects/elisp/'
+  extra-dep: true
+- location:  '/home/sergey/projects/haskell/projects/thirdparty/free/'
+  extra-dep: true
